@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { BtnStyled, FormStyled, InputStyled } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContactAction } from 'store/slice';
+import { addContactAction, selectContacts } from 'store/slice';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
 
-  const contacts = useSelector(state => state.phonebook.contacts);
+  const contacts = useSelector(selectContacts);
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -18,8 +18,8 @@ export const ContactForm = () => {
       case 'name':
         setName(value.trim());
         break;
-      case 'number':
-        setNumber(value.trim());
+      case 'phone':
+        setPhone(value.trim());
         break;
       default:
         return;
@@ -28,12 +28,12 @@ export const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    addContact(name, number);
+    addContact(name, phone);
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
-  const addContact = (name, number) => {
+  const addContact = (name, phone) => {
     const isPresent = contacts.find(contact => contact.name === name);
 
     if (isPresent) {
@@ -41,7 +41,7 @@ export const ContactForm = () => {
       return;
     }
 
-    dispatch(addContactAction({ name, number }));
+    dispatch(addContactAction({ name, phone }));
   };
 
   return (
@@ -56,11 +56,11 @@ export const ContactForm = () => {
       />
       <InputStyled
         type="tel"
-        name="number"
+        name="phone"
         onChange={handleChange}
-        value={number}
+        value={phone}
         required
-        placeholder="Enter contact number"
+        placeholder="Enter contact phone"
       />
       <BtnStyled type="submit">Add contact</BtnStyled>
     </FormStyled>

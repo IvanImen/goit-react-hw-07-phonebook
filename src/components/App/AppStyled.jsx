@@ -16,3 +16,10 @@ export const TitleStyled = styled.h2`
   margin-bottom: 32px;
   color: #ffffff;
 `;
+
+export const ErrorStyled = styled.p`
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 12px;
+`;

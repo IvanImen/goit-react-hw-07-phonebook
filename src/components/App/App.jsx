@@ -1,17 +1,19 @@
 import React from 'react';
 
 import { ContactForm, ContactsList, Filter } from 'components';
-import { ContainerStyled, SectionStyled, TitleStyled } from './AppStyled';
+import {
+  ContainerStyled,
+  ErrorStyled,
+  SectionStyled,
+  TitleStyled,
+} from './AppStyled';
+import { selectError, selectIsLoading } from 'store/slice';
+import { useSelector } from 'react-redux';
+import { Loader } from 'components/Loader/Loader';
 
 export const App = () => {
-  // const [contacts, setContacts] = useState(
-  //   JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []
-  // );
-
-  // useEffect(() => {
-  //   isLoaded &&
-  //     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
-  // }, [contacts, isLoaded]);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   return (
     <SectionStyled>
@@ -20,6 +22,8 @@ export const App = () => {
         <ContactForm />
         <TitleStyled>Contacts</TitleStyled>
         <Filter />
+        {isLoading && <Loader />}
+        {error && <ErrorStyled>{error}</ErrorStyled>}
         <ContactsList />
       </ContainerStyled>
     </SectionStyled>
